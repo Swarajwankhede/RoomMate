@@ -1,0 +1,2 @@
+import {createContext,useContext,useEffect,useState} from 'react';const C=createContext();
+export function ExpenseProvider({children}){const [expenses,setExpenses]=useState(()=>JSON.parse(localStorage.getItem('expenses')||'[]'));useEffect(()=>localStorage.setItem('expenses',JSON.stringify(expenses)),[expenses]);return <C.Provider value={{expenses,add:e=>setExpenses(x=>[...x,{...e,id:Date.now()}]),remove:id=>setExpenses(x=>x.filter(e=>e.id!==id))}}>{children}</C.Provider>}export const useExpenses=()=>useContext(C);
